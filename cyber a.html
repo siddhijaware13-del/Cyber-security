@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cyber Security Complaint Portal</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f8fb;
+    color:#222;
+}
+
+nav{
+    background:#061b2d;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#00d4ff;
+}
+
+.navlinks{
+    display:flex;
+    gap:20px;
+    list-style:none;
+}
+
+.navlinks a{
+    color:white;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.navlinks a:hover{
+    color:#00d4ff;
+}
+
+.login-btn{
+    background:#00a8cc;
+    color:white;
+    border:0;
+    padding:10px 20px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.page{
+    display:none;
+    min-height:650px;
+    padding:60px 7%;
+}
+
+.page.active{
+    display:block;
+}
+
+.hero{
+    min-height:550px;
+
+    background:
+    linear-gradient(rgba(2,20,35,.82),rgba(2,20,35,.82)),
+    url("https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1600&q=80");
+
+    background-size:cover;
+    background-position:center;
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    padding:40px;
+}
+
+.hero-content{
+    max-width:850px;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:19px;
+    line-height:1.7;
+}
+
+.btn{
+    border:0;
+    padding:12px 22px;
+    border-radius:7px;
+    cursor:pointer;
+    margin:7px;
+}
+
+.btn-primary{
+    background:#00a8cc;
+    color:white;
+}
+
+.btn-dark{
+    background:#061b2d;
+    color:white;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.title h2{
+    color:#061b2d;
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.title p{
+    color:#666;
+}
+
+.attack-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+}
+
+.attack-card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.attack-card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.attack-content{
+    padding:22px;
+}
+
+.attack-content h3{
+    color:#061b2d;
+    margin-bottom:10px;
+}
+
+.attack-content p{
+    color:#666;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.attack-link{
+    color:#008bb5;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.detail-box,
+.form-box{
+    max-width:850px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 5px 25px rgba(0,0,0,.1);
+}
+
+.detail-box h2{
+    color:#061b2d;
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.detail-box h3{
+    color:#008bb5;
+    margin:20px 0 10px;
+}
+
+.detail-box p,
+.detail-box li{
+    line-height:1.7;
+    color:#555;
+}
+
+.detail-box ul{
+    margin-left:25px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.form-group textarea{
+    min-height:130px;
+}
+
+.submit-btn{
+    background:#061b2d;
+    color:white;
+    padding:13px 25px;
+    border:0;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.track-result{
+    margin-top:25px;
+    padding:20px;
+    background:#eef8fc;
+    border-radius:10px;
+    display:none;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    background:#fff0c2;
+    color:#795900;
+    margin-top:8px;
+}
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.contact-card{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:3000;
+}
+
+.modal-box{
+    background:white;
+    width:90%;
+    max-width:420px;
+    padding:30px;
+    border-radius:15px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:15px;
+    font-size:25px;
+    cursor:pointer;
+}
+
+footer{
+    background:#061b2d;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+@media(max-width:700px){
+
+    nav{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .navlinks{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+<div class="logo">
+🛡️ Cyber<span>Shield</span>
+</div>
+
+<ul class="navlinks">
+
+<li>
+<a onclick="showPage('home')">Home</a>
+</li>
+
+<li>
+<a onclick="showPage('attacks')">
+Cyber Attacks
+</a>
+</li>
+
+<!-- ONLY NEW POINT -->
+
+<li>
+<a onclick="showPage('women-safety')">
+👩 Women Safety
+</a>
+</li>
+
+<li>
+<a onclick="showPage('track')">
+Track Complaint
+</a>
+</li>
+
+<li>
+<a onclick="showPage('contact')">
+Contact
+</a>
+</li>
+
+</ul>
+
+<button class="login-btn" onclick="openLogin()">
+Login
+</button>
+
+</nav>
+
+
+
+<!-- ================= HOME ================= -->
+
+<div id="home" class="page active">
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+Cyber Security Complaint Portal
+</h1>
+
+<p>
+Stay Safe. Stay Aware. Report Cyber Crime.
+Learn about different cyber attacks and
+submit your cyber complaint.
+</p>
+
+<button
+class="btn btn-primary"
+onclick="showPage('attacks')">
+
+Explore Cyber Attacks
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="requireLogin('complaint')">
+
+Report an Attack
+
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+
+
+<!-- ================= CYBER ATTACKS ================= -->
+
+<div id="attacks" class="page">
+
+<div class="title">
+
+<h2>
+🛡️ Different Cyber Attacks
+</h2>
+
+<p>
+Select an attack to learn more and report it.
+</p>
+
+</div>
+
+
+<div class="attack-grid">
+
+
+<!-- PHISHING -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+🎣 Phishing Attack
+</h3>
+
+<p>
+Fake messages or websites may try to steal
+personal information.
+</p>
+
+<a class="attack-link"
+onclick="showPage('phishing')">
+
+View & Report →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- OTP -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+📱 OTP / UPI Fraud
+</h3>
+
+<p>
+Fraudsters may trick users into sharing
+payment information.
+</p>
+
+<a class="attack-link"
+onclick="showPage('otp')">
+
+View & Report →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- SOCIAL -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+📸 Social Media Impersonation
+</h3>
+
+<p>
+Someone creates a fake profile using
+another person's information.
+</p>
+
+<a class="attack-link"
+onclick="showPage('social')">
+
+View & Report →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- STALKING -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+🕵️ Cyberstalking
+</h3>
+
+<p>
+Repeated unwanted online contact or monitoring.
+</p>
+
+<a class="attack-link"
+onclick="showPage('stalking')">
+
+View & Report →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- HACKING -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+🔓 Account Hacking
+</h3>
+
+<p>
+Unauthorized access to an online account.
+</p>
+
+<a class="attack-link"
+onclick="showPage('hacking')">
+
+View & Report →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- FINANCIAL -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+💳 Online Financial Fraud
+</h3>
+
+<p>
+Unauthorized transactions or deceptive
+payment requests.
+</p>
+
+<a class="attack-link"
+onclick="showPage('financial')">
+
+View & Report →
+
+</a>
+
+</div>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!--              WOMEN SAFETY - NEW ONLY              -->
+<!-- ================================================= -->
+
+<div id="women-safety" class="page">
+
+<div class="title">
+
+<h2>
+👩 Women Safety
+</h2>
+
+<p>
+Cyber safety information and support for women
+</p>
+
+</div>
+
+
+<div class="attack-grid">
+
+
+<!-- ONLINE SAFETY -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+🛡️ Women Online Safety
+</h3>
+
+<p>
+Learn basic ways to protect your identity,
+accounts and personal information online.
+</p>
+
+<a class="attack-link"
+onclick="showPage('women-online-safety')">
+
+Learn More →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- WOMEN COMPLAINT -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+🚨 Women Cyber Complaint
+</h3>
+
+<p>
+If you face a cyber incident, you can submit
+your complaint through our portal.
+</p>
+
+<a class="attack-link"
+onclick="requireLogin('complaint')">
+
+File Complaint →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- SOCIAL MEDIA SAFETY -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+📱 Social Media Safety
+</h3>
+
+<p>
+Learn how to protect your social media
+accounts and personal information.
+</p>
+
+<a class="attack-link"
+onclick="showPage('women-social-safety')">
+
+Learn More →
+
+</a>
+
+</div>
+</div>
+
+
+
+<!-- FAKE PROFILE -->
+
+<div class="attack-card">
+
+<img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&w=700&q=80">
+
+<div class="attack-content">
+
+<h3>
+👤 Fake Profile
+</h3>
+
+<p>
+Learn what to do if someone creates a
+fake profile using your information.
+</p>
+
+<a class="attack-link"
+onclick="showPage('women-fake')">
+
+View & Report →
+
+</a>
+
+</div>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ================= WOMEN ONLINE SAFETY ================= -->
+
+<div id="women-online-safety" class="page">
+
+<div class="detail-box">
+
+<h2>
+🛡️ Women Online Safety
+</h2>
+
+<p>
+Women should be careful while sharing personal
+information and communicating with unknown people online.
+</p>
+
+<h3>
+Safety Tips
+</h3>
+
+<ul>
+
+<li>
+Use strong passwords.
+</li>
+
+<li>
+Enable two-factor authentication.
+</li>
+
+<li>
+Do not share OTP or passwords.
+</li>
+
+<li>
+Avoid clicking unknown links.
+</li>
+
+<li>
+Keep social media accounts private.
+</li>
+
+<li>
+Save screenshots if you face an online problem.
+</li>
+
+</ul>
+
+<button
+class="btn btn-dark"
+onclick="showPage('women-safety')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= WOMEN SOCIAL SAFETY ================= -->
+
+<div id="women-social-safety" class="page">
+
+<div class="detail-box">
+
+<h2>
+📱 Women Social Media Safety
+</h2>
+
+<p>
+Protect your social media account and personal
+information from unknown people and suspicious accounts.
+</p>
+
+<h3>
+Safety Tips
+</h3>
+
+<ul>
+
+<li>
+Do not accept unknown friend requests.
+</li>
+
+<li>
+Use a strong and unique password.
+</li>
+
+<li>
+Enable two-factor authentication.
+</li>
+
+<li>
+Block suspicious accounts.
+</li>
+
+<li>
+Report abusive or fake accounts.
+</li>
+
+</ul>
+
+<button
+class="btn btn-dark"
+onclick="showPage('women-safety')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= WOMEN FAKE PROFILE ================= -->
+
+<div id="women-fake" class="page">
+
+<div class="detail-box">
+
+<h2>
+👤 Women - Fake Profile
+</h2>
+
+<p>
+A fake profile may use a person's name,
+photograph or information without permission.
+</p>
+
+<h3>
+Safety Steps
+</h3>
+
+<ul>
+
+<li>
+Take screenshots.
+</li>
+
+<li>
+Report the fake profile.
+</li>
+
+<li>
+Block the account if necessary.
+</li>
+
+<li>
+Keep evidence safely.
+</li>
+
+</ul>
+
+<button
+class="btn btn-primary"
+onclick="requireLogin('complaint')">
+
+Report Fake Profile
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showPage('women-safety')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= ATTACK DETAIL PAGES ================= -->
+
+<div id="phishing" class="page">
+
+<div class="detail-box">
+
+<h2>🎣 Phishing Attack</h2>
+
+<p>
+Phishing uses fake messages, emails or websites
+to trick people into sharing information.
+</p>
+
+<h3>Safety Steps</h3>
+
+<ul>
+<li>Do not click suspicious links.</li>
+<li>Check website addresses carefully.</li>
+<li>Never share passwords or OTPs.</li>
+<li>Keep screenshots as evidence.</li>
+</ul>
+
+<button
+class="btn btn-primary"
+onclick="requireLogin('complaint')">
+
+Report Phishing
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showPage('attacks')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div id="otp" class="page">
+
+<div class="detail-box">
+
+<h2>📱 OTP / UPI Fraud</h2>
+
+<p>
+Fraudsters may request payment information
+by pretending to be trusted people or services.
+</p>
+
+<h3>Safety Steps</h3>
+
+<ul>
+<li>Never share OTP or PIN.</li>
+<li>Do not approve unknown payment requests.</li>
+<li>Check payment details carefully.</li>
+<li>Contact your bank for unauthorized transactions.</li>
+</ul>
+
+<button
+class="btn btn-primary"
+onclick="requireLogin('complaint')">
+
+Report OTP / UPI Fraud
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showPage('attacks')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div id="social" class="page">
+
+<div class="detail-box">
+
+<h2>📸 Social Media Impersonation</h2>
+
+<p>
+A fake account may be created using another
+person's name or photographs.
+</p>
+
+<h3>Safety Steps</h3>
+
+<ul>
+<li>Take screenshots.</li>
+<li>Report the fake profile.</li>
+<li>Block the account.</li>
+<li>Keep evidence.</li>
+</ul>
+
+<button
+class="btn btn-primary"
+onclick="requireLogin('complaint')">
+
+Report Fake Profile
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showPage('attacks')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div id="stalking" class="page">
+
+<div class="detail-box">
+
+<h2>🕵️ Cyberstalking</h2>
+
+<p>
+Cyberstalking can involve repeated unwanted
+messages or online monitoring.
+</p>
+
+<h3>Safety Steps</h3>
+
+<ul>
+<li>Do not engage with threatening messages.</li>
+<li>Block unwanted accounts.</li>
+<li>Save evidence.</li>
+<li>Tell a trusted person.</li>
+</ul>
+
+<button
+class="btn btn-primary"
+onclick="requireLogin('complaint')">
+
+Report Cyberstalking
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showPage('attacks')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div id="hacking" class="page">
+
+<div class="detail-box">
+
+<h2>🔓 Account Hacking</h2>
+
+<p>
+Unauthorized access to an email or social media account
+can create a cyber security problem.
+</p>
+
+<h3>Safety Steps</h3>
+
+<ul>
+<li>Change the password.</li>
+<li>Enable two-factor authentication.</li>
+<li>Review active sessions.</li>
+<li>Secure recovery details.</li>
+</ul>
+
+<button
+class="btn btn-primary"
+onclick="requireLogin('complaint')">
+
+Report Account Hacking
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showPage('attacks')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div id="financial" class="page">
+
+<div class="detail-box">
+
+<h2>💳 Online Financial Fraud</h2>
+
+<p>
+Online financial fraud may include unauthorized
+transactions and deceptive payment requests.
+</p>
+
+<h3>Safety Steps</h3>
+
+<ul>
+<li>Do not share OTP or PIN.</li>
+<li>Contact your bank.</li>
+<li>Keep transaction details.</li>
+<li>Report through appropriate channels.</li>
+</ul>
+
+<button
+class="btn btn-primary"
+onclick="requireLogin('complaint')">
+
+Report Financial Fraud
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showPage('attacks')">
+
+← Back
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= COMPLAINT ================= -->
+
+<div id="complaint" class="page">
+
+<div class="title">
+
+<h2>
+📝 Online Cyber Complaint
+</h2>
+
+<p>
+Enter information about your cyber incident
+</p>
+
+</div>
+
+
+<div class="form-box">
+
+<form id="complaintForm">
+
+<div class="form-group">
+
+<label>Full Name *</label>
+
+<input
+type="text"
+id="name"
+required
+placeholder="Enter your name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Email *</label>
+
+<input
+type="email"
+id="email"
+required
+placeholder="Enter your email">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Mobile Number *</label>
+
+<input
+type="tel"
+id="mobile"
+required
+pattern="[0-9]{10}"
+placeholder="10 digit mobile number">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Attack Type *</label>
+
+<select id="attackType" required>
+
+<option value="">
+Select Attack Type
+</option>
+
+<option>
+Phishing Attack
+</option>
+
+<option>
+OTP / UPI Fraud
+</option>
+
+<option>
+Social Media Impersonation
+</option>
+
+<option>
+Cyberstalking
+</option>
+
+<option>
+Account Hacking
+</option>
+
+<option>
+Online Financial Fraud
+</option>
+
+<option>
+Women Cyber Safety
+</option>
+
+<option>
+Online Harassment
+</option>
+
+<option>
+Fake Profile
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Date of Incident *</label>
+
+<input
+type="date"
+id="incidentDate"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Where did it happen?</label>
+
+<select id="platform">
+
+<option>Instagram</option>
+<option>WhatsApp</option>
+<option>Facebook</option>
+<option>Email</option>
+<option>Website</option>
+<option>UPI / Banking</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Complaint Details *</label>
+
+<textarea
+id="details"
+required
+placeholder="Explain what happened...">
+</textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Evidence / Reference</label>
+
+<input
+type="text"
+id="evidence"
+placeholder="Example: Screenshot available">
+
+</div>
+
+
+<button
+type="submit"
+class="submit-btn">
+
+Submit Complaint
+
+</button>
+
+</form>
+
+
+<div
+id="complaintSuccess"
+style="
+display:none;
+margin-top:20px;
+padding:20px;
+background:#e9fff0;
+border-radius:10px;
+">
+
+<h3>
+✅ Complaint Submitted
+</h3>
+
+<p>
+Your demo complaint has been registered.
+</p>
+
+<p>
+<strong>Complaint ID:</strong>
+
+<span id="newComplaintId"></span>
+
+</p>
+
+<p>
+Save this ID to track your complaint.
+</p>
+
+<button
+class="btn btn-primary"
+onclick="showPage('track')">
+
+Track Complaint
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= TRACK ================= -->
+
+<div id="track" class="page">
+
+<div class="title">
+
+<h2>
+🔎 Track Complaint
+</h2>
+
+<p>
+Enter your Complaint ID
+</p>
+
+</div>
+
+
+<div class="form-box">
+
+<div class="form-group">
+
+<label>
+Complaint ID
+</label>
+
+<input
+type="text"
+id="trackId"
+placeholder="Example: CYB-123456">
+
+</div>
+
+<button
+class="submit-btn"
+onclick="trackComplaint()">
+
+Track Complaint
+
+</button>
+
+
+<div
+id="trackResult"
+class="track-result">
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= CONTACT ================= -->
+
+<div id="contact" class="page">
+
+<div class="title">
+
+<h2>
+📞 Contact & Support
+</h2>
+
+<p>
+Cyber safety support information
+</p>
+
+</div>
+
+
+<div class="contact-grid">
+
+
+<div class="contact-card">
+
+<h3>
+🚨 Emergency
+</h3>
+
+<p>
+For immediate danger, contact local emergency
+services or a trusted person.
+</p>
+
+</div>
+
+
+<div class="contact-card">
+
+<h3>
+🛡️ Cyber Crime
+</h3>
+
+<p>
+For an actual cybercrime complaint in India,
+use the official National Cyber Crime Reporting Portal.
+</p>
+
+</div>
+
+
+<div class="contact-card">
+
+<h3>
+📧 Portal Support
+</h3>
+
+<p>
+support@cybershield.example
+</p>
+
+<p>
+Project Demo Contact
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ================= LOGIN ================= -->
+
+<div
+class="modal"
+id="loginModal">
+
+<div class="modal-box">
+
+<span
+class="close"
+onclick="closeLogin()">
+
+×
+
+</span>
+
+<h2>
+🔐 User Login
+</h2>
+
+<br>
+
+<form id="loginForm">
+
+<div class="form-group">
+
+<label>
+Email
+</label>
+
+<input
+type="email"
+id="loginEmail"
+required
+placeholder="Enter email">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Password
+</label>
+
+<input
+type="password"
+id="loginPassword"
+required
+placeholder="Enter password">
+
+</div>
+
+
+<button
+type="submit"
+class="submit-btn">
+
+Login
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<p>
+🛡️ <strong>
+CyberShield - Cyber Security Complaint Portal
+</strong>
+</p>
+
+<p>
+Educational Project | Cyber Security Awareness
+</p>
+
+<p>
+© 2026 CyberShield
+</p>
+
+</footer>
+
+
+
+<script>
+
+
+/* ================= PAGE CHANGE ================= */
+
+function showPage(pageId){
+
+document
+.querySelectorAll(".page")
+.forEach(function(page){
+
+page.classList.remove("active");
+
+});
+
+let page=document.getElementById(pageId);
+
+if(page){
+
+page.classList.add("active");
+
+window.scrollTo(0,0);
+
+}
+
+}
+
+
+/* ================= LOGIN ================= */
+
+let currentUser=null;
+
+let pendingPage=null;
+
+
+function openLogin(){
+
+document
+.getElementById("loginModal")
+.style.display="flex";
+
+}
+
+
+function closeLogin(){
+
+document
+.getElementById("loginModal")
+.style.display="none";
+
+}
+
+
+function requireLogin(page){
+
+if(currentUser){
+
+showPage(page);
+
+return;
+
+}
+
+pendingPage=page;
+
+openLogin();
+
+}
+
+
+/* ================= LOGIN FORM ================= */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let email=
+document.getElementById("loginEmail").value;
+
+let password=
+document.getElementById("loginPassword").value;
+
+
+if(password.length<6){
+
+alert(
+"Password must contain at least 6 characters."
+);
+
+return;
+
+}
+
+
+currentUser={
+email:email
+};
+
+
+localStorage.setItem(
+"cyberUser",
+JSON.stringify(currentUser)
+);
+
+
+closeLogin();
+
+alert("Login successful!");
+
+
+if(pendingPage){
+
+showPage(pendingPage);
+
+}
+
+pendingPage=null;
+
+});
+
+
+/* ================= LOAD USER ================= */
+
+let savedUser=
+localStorage.getItem("cyberUser");
+
+
+if(savedUser){
+
+currentUser=
+JSON.parse(savedUser);
+
+}
+
+
+/* ================= COMPLAINT SUBMIT ================= */
+
+document
+.getElementById("complaintForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+
+if(!currentUser){
+
+alert("Please login first.");
+
+openLogin();
+
+return;
+
+}
+
+
+let complaintId=
+"CYB-"+
+Math.floor(
+100000+
+Math.random()*900000
+);
+
+
+let complaint={
+
+id:complaintId,
+
+name:
+document.getElementById("name").value,
+
+email:
+document.getElementById("email").value,
+
+mobile:
+document.getElementById("mobile").value,
+
+attack:
+document.getElementById("attackType").value,
+
+date:
+document.getElementById("incidentDate").value,
+
+platform:
+document.getElementById("platform").value,
+
+details:
+document.getElementById("details").value,
+
+evidence:
+document.getElementById("evidence").value,
+
+status:
+"Complaint Received",
+
+submittedAt:
+new Date().toLocaleString()
+
+};
+
+
+let complaints=
+JSON.parse(
+localStorage.getItem("cyberComplaints")
+||
+"[]"
+);
+
+
+complaints.push(complaint);
+
+
+localStorage.setItem(
+"cyberComplaints",
+JSON.stringify(complaints)
+);
+
+
+document
+.getElementById("newComplaintId")
+.textContent=
+complaintId;
+
+
+document
+.getElementById("complaintSuccess")
+.style.display=
+"block";
+
+
+document
+.getElementById("complaintForm")
+.reset();
+
+});
+
+
+/* ================= TRACK COMPLAINT ================= */
+
+function trackComplaint(){
+
+let id=
+document
+.getElementById("trackId")
+.value
+.trim()
+.toUpperCase();
+
+
+let result=
+document.getElementById("trackResult");
+
+
+if(!id){
+
+alert("Please enter Complaint ID.");
+
+return;
+
+}
+
+
+let complaints=
+JSON.parse(
+localStorage.getItem("cyberComplaints")
+||
+"[]"
+);
+
+
+let complaint=
+complaints.find(
+item=>item.id===id
+);
+
+
+result.style.display="block";
+
+
+if(!complaint){
+
+result.innerHTML=`
+
+<h3>
+❌ Complaint Not Found
+</h3>
+
+<p>
+Please check your Complaint ID.
+</p>
+
+`;
+
+return;
+
+}
+
+
+result.innerHTML=`
+
+<h3>
+✅ Complaint Found
+</h3>
+
+<p>
+<strong>
+Complaint ID:
+</strong>
+
+${complaint.id}
+
+</p>
+
+<p>
+<strong>
+Name:
+</strong>
+
+${complaint.name}
+
+</p>
+
+<p>
+<strong>
+Attack:
+</strong>
+
+${complaint.attack}
+
+</p>
+
+<p>
+<strong>
+Incident Date:
+</strong>
+
+${complaint.date}
+
+</p>
+
+<p>
+<strong>
+Platform:
+</strong>
+
+${complaint.platform}
+
+</p>
+
+<p>
+<strong>
+Submitted:
+</strong>
+
+${complaint.submittedAt}
+
+</p>
+
+<span class="status">
+
+${complaint.status}
+
+</span>
+
+`;
+
+}
+
+
+/* ================= CLOSE MODAL ================= */
+
+window.onclick=function(event){
+
+let modal=
+document.getElementById("loginModal");
+
+
+if(event.target===modal){
+
+closeLogin();
+
+}
+
+};
+
+
+</script>
+
+</body>
+</html>
